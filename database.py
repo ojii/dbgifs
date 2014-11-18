@@ -62,4 +62,3 @@ class Database(object):
         self.people[person].append(gif)
         self.years[year].append(gif)
         self.names[name] = gif
-

@@ -3,6 +3,9 @@ import asyncio
 from collections import namedtuple
 import os
 
+from raven import Client
+client = Client()
+
 from database import Database
 from server import build_web_app
 

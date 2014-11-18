@@ -13,7 +13,8 @@ def search_gifs(database, term):
             if term.lower() in gif.name.lower():
                 tmp_score += 1
         score = tmp_score / terms_count
-        results.append((score, gif))
+        if score:
+            results.append((score, gif))
     return [
         result for score, result in
         sorted(results, key=lambda result: result[0], reverse=True)

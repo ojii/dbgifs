@@ -1,5 +1,6 @@
 from collections import defaultdict
 import datetime
+import logging
 import os
 import re
 
@@ -45,9 +46,11 @@ class Database(object):
         return '<Database:{}>'.format(self.source)
 
     def scan(self):
+        logging.info("Scan")
         for name in os.listdir(self.source):
             if name.endswith('.gif'):
                 self._load(name)
+        logging.info("Scan done")
 
     def _load(self, filename):
         path = os.path.join(self.source, filename)
@@ -55,10 +58,13 @@ class Database(object):
         year = datetime.datetime.fromtimestamp(stat.st_mtime).year
         person = SPLITTER.split(filename)[0]
         name = filename_to_name(filename)
+        logging.info("Loading {}".format(name))
         gif = GIF(path, name, year, person, stat.st_size)
         if gif in self.gifs:
+            logging.info("{} already found, skipping".format(name))
             return
         self.gifs.append(gif)
         self.people[person].append(gif)
         self.years[year].append(gif)
         self.names[name] = gif
+        logging.info("Loaded {}".format(name))

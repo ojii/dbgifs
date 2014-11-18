@@ -1,6 +1,7 @@
 import argparse
 import asyncio
 from collections import namedtuple
+import logging
 import os
 
 from raven import Client
@@ -23,31 +24,26 @@ Config = namedtuple(
 
 def keep_calling(loop, frequency, func, *args, **kwargs):
     def schedule():
+        logging.info("Scheduling to call {} in {}s".format(func, frequency))
         loop.call_later(
             frequency,
             handler,
         )
 
     def handler():
-        func(*args, **kwargs)
-        schedule()
+        logging.info("Calling {}".format(func))
+        try:
+            func(*args, **kwargs)
+        except:
+            client.captureException()
+        finally:
+            schedule()
 
     schedule()
 
 
-def exception_handler(loop, context):
-    try:
-        raise context['exception']
-    except:
-        client.captureException()
-    finally:
-        loop.default_exception_handler(context)
-
-
 def run(config):
     loop = asyncio.get_event_loop()
-
-    loop.set_exception_handler(exception_handler)
 
     database = Database(config.gifs_dir)
     webapp = build_web_app(config, database)
@@ -71,6 +67,8 @@ def main():
     parser.add_argument('--static-dir', default=DEFAULT_STATIC_DIR)
     parser.add_argument('--scan-frequency', type=int, default=5 * 60)
     args = parser.parse_args()
+
+    logging.basicConfig(level=logging.INFO)
 
     config = Config(**{
         key.replace('-', '_'): var for key, var in vars(args).items()

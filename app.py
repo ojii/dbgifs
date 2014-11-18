@@ -36,8 +36,13 @@ def keep_calling(loop, frequency, func, *args, **kwargs):
 
 
 def exception_handler(loop, context):
-    client.captureException()
-    loop.default_exception_handler(context)
+    try:
+        raise context['exception']
+    except:
+        client.captureException()
+    finally:
+        loop.default_exception_handler(context)
+
 
 def run(config):
     loop = asyncio.get_event_loop()

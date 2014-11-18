@@ -1,7 +1,8 @@
 <html>
   <head>
     <title>{{ title }}</title>
-   <link rel="search" href="/opensearchdescription.xml" type="application/opensearchdescription+xml" title="Search GIFs" />
+    <link rel="search" href="/opensearchdescription.xml" type="application/opensearchdescription+xml" title="Search GIFs" />
+    {% include '_analytics.html' %}
   </head>
   <body>
     {% include '_menu.html' %}
@@ -17,6 +18,5 @@
       {% endfor %}
 
     {% include '_paginator.html' %}
-    {% include '_analytics.html' %}
   </body>
 </html>

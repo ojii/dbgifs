@@ -1,0 +1,11 @@
+<a href="/">Index</a>
+<br>
+{% for year in db.years.keys() %}
+  <a href="/y/{{ year }}">DB{{ year - 2006 }}</a> {% if not loop.last %} | {% endif %}
+{% endfor %}
+<br>
+{% for person in db.people.keys() %}
+  <a href="/c/{{ person }}/">{{ person.capitalize() }}</a> {% if not loop.last %} | {% endif %}
+{% endfor %}
+<br>
+<form method="GET" action="/s/"><input type="search" name="q" placeholder="Search" tabindex="1"> <input type="submit"></form>

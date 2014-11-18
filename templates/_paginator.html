@@ -1,0 +1,5 @@
+{% if gifs.has_pages %}
+  {% for page in gifs.page_iter() %}
+    <a href="{{ gifs.url(page) }}">{{ page }}</a> {% if not loop.last %} | {% endif %}
+  {% endfor %}
+{% endif %}

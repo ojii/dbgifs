@@ -1,0 +1,21 @@
+<html>
+  <head>
+    <title>{{ title }}</title>
+   <link rel="search" href="/opensearchdescription.xml" type="application/opensearchdescription+xml" title="Search GIFs" />
+  </head>
+  <body>
+    {% include '_menu.html' %}
+
+    <h1>{{ title }}</h1>
+
+    {% include '_paginator.html' %}
+
+      {% for gif in gifs %}
+        {% include '_gif.html' %}
+      {% else %}
+        <p>No results</p>
+      {% endfor %}
+
+    {% include '_paginator.html' %}
+  </body>
+</html>

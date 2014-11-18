@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<OpenSearchDescription xmlns="http://a9.com/-/spec/opensearch/1.1/">
+<ShortName>DB GIFs</ShortName>
+<Description>Search DB GIFs.</Description>
+<Tags>desertbus gifs</Tags>
+<Contact>ojiidotch@gmail.com</Contact>
+<Url type="text/html" template="http://{{ request.host }}/s/?q={searchTerms}&amp;p={startPage?}"/>
+</OpenSearchDescription>

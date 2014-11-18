@@ -5,6 +5,8 @@ from urllib.parse import urlencode
 from aiohttp import web
 from jinja2 import Environment
 from jinja2 import FileSystemLoader
+from raven import Client
+client = Client()
 
 from search import search_gifs
 
@@ -42,16 +44,20 @@ def get_db(year):
 
 def render(request, template, headers=None, encoding='utf-8', status=200,
            **context):
-    template = request.app.jinja.get_template(template)
-    context['request'] = request
-    output = template.render(webapp=request.app, **context)
-    body = output.encode(encoding)
-    headers = headers or {
-        'Content-Type': 'text/html',
-    }
-    headers['Content-Length'] = str(len(body))
-    response = web.Response(request, body, status=status, headers=headers)
-    return response
+    try:
+        template = request.app.jinja.get_template(template)
+        context['request'] = request
+        output = template.render(webapp=request.app, **context)
+        body = output.encode(encoding)
+        headers = headers or {
+            'Content-Type': 'text/html',
+        }
+        headers['Content-Length'] = str(len(body))
+        response = web.Response(request, body, status=status, headers=headers)
+        return response
+    except:
+        client.captureException()
+        raise
 
 
 def render_list(request, title, gifs, status=200):

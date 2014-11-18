@@ -35,8 +35,14 @@ def keep_calling(loop, frequency, func, *args, **kwargs):
     schedule()
 
 
+def exception_handler(loop, context):
+    client.captureException()
+    loop.default_exception_handler(context)
+
 def run(config):
     loop = asyncio.get_event_loop()
+
+    loop.set_exception_handler(exception_handler)
 
     database = Database(config.gifs_dir)
     webapp = build_web_app(config, database)

@@ -93,7 +93,7 @@ def person_view(request):
 
 @asyncio.coroutine
 def year_view(request):
-    year = request.match_info['year']
+    year = int(request.match_info['year'])
     try:
         gifs = request.app.db.years[year]
         desertbus = get_db(year)

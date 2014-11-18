@@ -88,7 +88,7 @@ def person_view(request):
         gifs = request.app.db.people[name]
     except KeyError:
         return four_oh_four(request)
-    return render_list(request, name, gifs)
+    return render_list(request, name.capitalize(), gifs)
 
 
 @asyncio.coroutine

@@ -19,6 +19,6 @@
 
     {% include '_paginator.html' %}
 
-    <p><small>Indexing {{ db.gifs|length() }} GIFs, courtesy of CantWearHats</small></p>
+    <p><small>Indexing {{ db.gifs|length() }} GIFs, courtesy of CantWearHats. Last updated {{ db.last_updated.strftime("%c %Z") }}</small></p>
   </body>
 </html>

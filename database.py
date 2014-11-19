@@ -4,6 +4,8 @@ import logging
 import os
 import re
 
+from dateutil.tz import tzlocal
+
 
 SPLITTER = re.compile('-|_')
 
@@ -40,6 +42,7 @@ class Database(object):
         self.gifs = []
         self.years = defaultdict(list)
         self.names = {}
+        self.last_updated = datetime.datetime.now(tz=tzlocal())
         self.scan()
 
     def __repr__(self):
@@ -52,6 +55,7 @@ class Database(object):
             if name.endswith('.gif'):
                 if self._load(name):
                     count += 1
+        self.last_updated = datetime.datetime.now(tz=tzlocal())
         logging.info("Scan done ({} new GIFs)".format(count))
 
     def _load(self, filename):

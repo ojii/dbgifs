@@ -47,10 +47,12 @@ class Database(object):
 
     def scan(self):
         logging.info("Scan")
+        count = 0
         for name in os.listdir(self.source):
             if name.endswith('.gif'):
-                self._load(name)
-        logging.info("Scan done")
+                if self._load(name):
+                    count += 1
+        logging.info("Scan done ({} new GIFs)".format(count))
 
     def _load(self, filename):
         path = os.path.join(self.source, filename)
@@ -62,9 +64,10 @@ class Database(object):
         gif = GIF(path, name, year, person, stat.st_size)
         if gif in self.gifs:
             logging.info("{} already found, skipping".format(name))
-            return
+            return False
         self.gifs.append(gif)
         self.people[person].append(gif)
         self.years[year].append(gif)
         self.names[name] = gif
         logging.info("Loaded {}".format(name))
+        return True

@@ -1,3 +1,4 @@
+<p>
 {% if gifs.has_pages %}
   {% for page in gifs.page_iter() %}
     {% if page == gifs.page %}
@@ -8,3 +9,4 @@
      {% if not loop.last %} | {% endif %}
   {% endfor %}
 {% endif %}
+</p>

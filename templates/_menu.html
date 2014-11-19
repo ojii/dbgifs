@@ -3,6 +3,7 @@
   {% for year in db.years.keys()|sort() %}
     <a href="/y/{{ year }}/">DB{{ year - 2006 }}</a> {% if not loop.last %} | {% endif %}
   {% endfor %}
+  <span style="float:right;">Help the children at <a href="https://desertbus.org/">DesertBus</a></span>
 </p>
 <p>
 {% for person in db.people.keys()|sort() %}

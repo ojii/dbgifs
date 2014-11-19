@@ -6,4 +6,5 @@
 <Contact>ojiidotch@gmail.com</Contact>
 <Url type="text/html" template="http://{{ request.host }}/s/?q={searchTerms}"/>
 <Url type="application/json" rel="suggestions" template="http://{{ request.host }}/s/?q={searchTerms}&amp;type=opensearchsuggest" />
+<Url type="application/opensearchdescription+xml" rel="self" template="http://{{ request.host }}/opensearchdescription.xml" />
 </OpenSearchDescription>

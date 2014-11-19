@@ -139,7 +139,7 @@ def osd_view(request):
         request,
         'opensearchdescription.xml',
         headers={
-            'Content-Type': 'text/xml',
+            'Content-Type': 'application/opensearchdescription+xml',
         }
     )
 

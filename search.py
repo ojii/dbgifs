@@ -19,3 +19,17 @@ def search_gifs(database, term):
         result for score, result in
         sorted(results, key=lambda result: result[0], reverse=True)
     ]
+
+
+def to_open_search_suggestion(request, term, results):
+    suggestions = []
+    urls = []
+    for gif in results:
+        suggestions.append(gif.name)
+        urls.apppend('http://{}/gifs/{}'.firmat(request.host, gif.filename))
+    return [
+        term,
+        suggestions,
+        suggestions,
+        urls,
+    ]

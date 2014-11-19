@@ -1,4 +1,5 @@
 import asyncio
+import json
 from math import ceil
 from urllib.parse import urlencode
 
@@ -9,6 +10,7 @@ from raven import Client
 client = Client()
 
 from search import search_gifs
+from search import to_open_search_suggestion
 
 
 class Paginator(object):
@@ -60,6 +62,18 @@ def render(request, template, headers=None, encoding='utf-8', status=200,
         raise
 
 
+def json_response(request, data, headers=None, encoding='utf-8', status=200):
+    try:
+        headers = headers or {}
+        output = json.dumps(data).encode(encoding)
+        headers['Content-Type'] = 'application/json'
+        headers['Content-Length'] = len(output)
+        return web.Response(request, output, status=status, headers=headers)
+    except:
+        client.captureException()
+        raise
+
+
 def render_list(request, title, gifs, status=200):
     gifs = Paginator(
         request=request,
@@ -106,8 +120,12 @@ def year_view(request):
 def search_view(request):
     term = request.GET.get('q', '')
     results = search_gifs(request.app.db, term)
-    title = 'Results: {}'.format(term)
-    return render_list(request, title, results)
+    if request.GET.get('type', None) == 'opensearchsuggest':
+        data = to_open_search_suggestion(request, term, results)
+        return json_response(data)
+    else:
+        title = 'Results: {}'.format(term)
+        return render_list(request, title, results)
 
 
 @asyncio.coroutine

@@ -4,5 +4,6 @@
 <Description>Search DB GIFs.</Description>
 <Tags>desertbus gifs</Tags>
 <Contact>ojiidotch@gmail.com</Contact>
-<Url type="text/html" template="http://{{ request.host }}/s/?q={searchTerms}&amp;p={startPage?}"/>
+<Url type="text/html" template="http://{{ request.host }}/s/?q={searchTerms}"/>
+<Url type="application/json" rel="suggestions" template="http://{{ request.host }}/s/?q={searchTerms}&amp;type=opensearchsuggest" />
 </OpenSearchDescription>
